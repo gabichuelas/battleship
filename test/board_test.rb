@@ -89,7 +89,15 @@ class BoardTest < Minitest::Test
     # assert_same checks for equivalent
     # objects ID, not equivalent states
     assert_same cell_3.ship, cell_2.ship
-  end 
+  end
 
+  # TEST OVERLAPPING SHIPS
 
+  def test_overlapping_ships_are_not_possible
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    refute @board.valid_placement?(@submarine, ["A1", "B1"])
+    # The following should be false because the cruiser
+    # Ship is already taking up the A1 cell.
+  end
+  
 end
