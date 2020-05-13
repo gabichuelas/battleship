@@ -20,4 +20,14 @@ class BoardTest < Minitest::Test
     # is a Cell object.
     assert_instance_of Cell, @board.cells["AI"].class
   end
+
+  def test_it_has_a_valid_coordinate
+    assert @board.valid_coordinate?("AI")
+    assert @board.valid_coordinate?("D4")
+
+    refute @board.valid_coordinate?("A5")
+    refute @board.valid_coordinate?("E1")
+    refute @board.valid_coordinate("A22")
+  end
+  
 end
