@@ -54,6 +54,8 @@ class BoardTest < Minitest::Test
   end
 
   def test_valid_placement_by_consecutive_cell_coordinates
+    skip
+
     refute @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
     refute @board.valid_placement?(@submarine, ["A1", "C1"])
     refute @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
@@ -61,11 +63,15 @@ class BoardTest < Minitest::Test
   end
 
   def test_valid_placement_coordinates_not_diagonal
+    skip
+
     refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
     refute @board.valid_placement?(@submarine, ["C2", "D3"])
   end
 
   def test_valid_ship_placement
+    skip
+
     assert @board.valid_placement?(@submarine, ["A1", "A2"])
     assert @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
   end
@@ -73,6 +79,8 @@ class BoardTest < Minitest::Test
   # TEST PLACING SHIPS
 
   def test_can_have_a_ship_placed_on_it
+    skip
+
     board.place(cruiser, ["A1", "A2", "A3"])
     cell_1 = board.cells["A1"]
     cell_2 = board.cells["A2"]
@@ -94,13 +102,17 @@ class BoardTest < Minitest::Test
   # TEST OVERLAPPING SHIPS
 
   def test_overlapping_ships_are_not_possible
+    skip
+    
     @board.place(@cruiser, ["A1", "A2", "A3"])
+
     refute @board.valid_placement?(@submarine, ["A1", "B1"])
     # The following should be false because the cruiser
     # Ship is already taking up the A1 cell.
   end
 
   def test_it_has_default_rendered_state
+    skip
     # board is rendered with no shots fired by default
     assert_equal
     "  1 2 3 4 \n" +
@@ -112,6 +124,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_renders_with_a_ship
+    skip
     # board is rendered after a ship has been placed
     # this is designated by the optional argument (true)
     assert_equal
