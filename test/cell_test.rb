@@ -33,22 +33,28 @@ class CellTest < Minitest::Test
   def test_it_has_a_new_ship
     skip
     cruiser = Ship.new("Cruiser", 3)
-    assert_equal @cruiser, @cell.place_ship
+    @cell.place_ship(cruiser)
+    assert_instance_of Ship, cell.ship
     refute @cell.empty?
   end
 
   def test_it_has_not_been_fired_upon
     skip
+    cruiser = Ship.new("Cruiser", 3)
+    @cell.place_ship(cruiser)
     refute @cell.fired_upon?
   end
 
-  def test_when_hit_loses_1_health
+  def test_has_been_fired_upon
+    skip
+    cruiser = Ship.new("Cruiser", 3)
+    @cell.place_ship(cruiser)
     @cell.fire_upon
     assert_equal 2, @cell.ship.health
     assert @cell.fired_upon?
   end
 
-  def test_cell_has_not_been_fired_upon
+  def test_cell_can_be_rendered
     skip
     cell_1 = Cell.new("B4")
     assert_equal ".", cell_1.render
@@ -61,48 +67,31 @@ class CellTest < Minitest::Test
     assert_equal "M", cell_1.render
   end
 
-  def test_it_has_a_new_cell
+  def test_cell_rendering_with_ship_hit
     skip
     cell_2 = Cell.new("C3")
-    assert_instance_of Cell, cell_2
-  end
-
-  def test_cell_has_a_ship
-    skip
-    assert_equal @cruiser, cell_2.place_ship
-  end
-
-  def test_new_cell_has_not_been_fired_upon
-    skip
+    cruiser = Ship.new("Cruiser", 3)
+    cell_2.place_ship(cruiser)
     assert_equal ".", cell_2.render
-  end
-
-  def test_new_cell_has_ship
-    skip
     assert_equal "S", cell_2.render(true)
-  end
 
-  def test_new_cell_has_been_fired_upon
-    skip
+    cell_2.fire_upon
     assert @cell.fired_upon?
-  end
-
-  def test_ship_has_been_hit
-    skip
     assert_equal "H", cell_2.render
-  end
 
-  def test_ship_has_not_been_sunk
-    skip
     refute @cruiser.sunk?
   end
 
   def test_it_is_sunk_when_hit_3_times
     skip
-    @cruiser.hit
-    @cruiser.hit
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+    cell_2.place_ship(cruiser)
 
-    assert_equal 0, @cruiser.health
+    @cruiser.hit
+    @cruiser.hit
+    refute @cruiser.sunk?
+    @cruiser.hit
     assert @cruiser.sunk?
     assert_equal "X", cell_2.render
   end
