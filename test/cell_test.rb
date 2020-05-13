@@ -32,11 +32,8 @@ class CellTest < Minitest::Test
 
   def test_it_has_a_new_ship
     skip
+    cruiser = Ship.new("Cruiser", 3)
     assert_equal @cruiser, @cell.place_ship
-  end
-
-  def test_it_is_not_empty
-    skip
     refute @cell.empty?
   end
 
@@ -46,28 +43,28 @@ class CellTest < Minitest::Test
   end
 
   def test_when_hit_loses_1_health
-    @cruiser.hit
+    @cell.fire_upon
     assert_equal 2, @cell.ship.health
-  end
-
-  def test_it_has_been_fired_upon
-    skip
     assert @cell.fired_upon?
   end
 
   def test_cell_has_not_been_fired_upon
     skip
+    cell_1 = Cell.new("B4")
     assert_equal ".", cell_1.render
   end
 
   def test_fired_upon_and_shot_missed
     skip
+    cell_1 = Cell.new("B4")
+    cell_1.fire_upon
     assert_equal "M", cell_1.render
   end
 
   def test_it_has_a_new_cell
     skip
-    assert_equal cell_2, Cell.new("C3")
+    cell_2 = Cell.new("C3")
+    assert_instance_of Cell, cell_2
   end
 
   def test_cell_has_a_ship
