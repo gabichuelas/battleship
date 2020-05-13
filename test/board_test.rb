@@ -99,5 +99,44 @@ class BoardTest < Minitest::Test
     # The following should be false because the cruiser
     # Ship is already taking up the A1 cell.
   end
-  
+
+  def test_it_has_default_rendered_state
+    # board is rendered with no shots fired by default
+    assert_equal
+    "  1 2 3 4 \n" +
+    "A . . . . \n" +
+    "B . . . . \n" +
+    "C . . . . \n" +
+    "D . . . . \n" ,
+    @board.render
+  end
+
+  def test_it_renders_with_a_ship
+    # board is rendered after a ship has been placed
+    # this is designated by the optional argument (true)
+    assert_equal
+    "  1 2 3 4 \n" +
+    "A S S S . \n" +
+    "B . . . . \n" +
+    "C . . . . \n" +
+    "D . . . . \n" ,
+    @board.render(true)
+  end
+
+  # ADD MORE RENDERING TESTS HERE
+  # include board rendering with Hits, Misses,
+  # and Sunken Ships. Two examples:
+
+  # "  1 2 3 4 \n" +
+  # "A H . . . \n" +
+  # "B . . . M \n" +
+  # "C X . . . \n" +
+  # "D X . . . \n"
+
+  # "  1 2 3 4 \n" +
+  # "A H S S . \n" +
+  # "B . . . M \n" +
+  # "C X . . . \n" +
+  # "D X . . . \n"
+
 end
