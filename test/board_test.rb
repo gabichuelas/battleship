@@ -29,7 +29,7 @@ class BoardTest < Minitest::Test
   def test_it_has_a_valid_coordinate
     skip
     # checks if a coordinate is on the board or not
-    assert @board.valid_coordinate?("AI")
+    assert @board.valid_coordinate?("A1")
     assert @board.valid_coordinate?("D4")
 
     refute @board.valid_coordinate?("A5")
@@ -103,7 +103,7 @@ class BoardTest < Minitest::Test
 
   def test_overlapping_ships_are_not_possible
     skip
-    
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
     refute @board.valid_placement?(@submarine, ["A1", "B1"])
