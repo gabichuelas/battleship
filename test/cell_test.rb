@@ -12,7 +12,7 @@ class CellTest < Minitest::Test
 
   def test_it_exists
     skip
-    assert_instance_of Cell, cell
+    assert_instance_of Cell, @cell
   end
 
   def test_it_has_coordinates
@@ -20,7 +20,7 @@ class CellTest < Minitest::Test
     assert_equal "B4", @cell.coordinate
   end
 
-  def test_it_has_a_ship
+  def test_it_does_not_have_a_ship
     skip
     assert_equal nil, @cell.ship
   end
@@ -40,8 +40,6 @@ class CellTest < Minitest::Test
     refute @cell.empty?
   end
 
-  -------------------------------------------
-
   def test_it_has_not_been_fired_upon
     skip
     refute @cell.fired_upon?
@@ -56,8 +54,6 @@ class CellTest < Minitest::Test
     skip
     assert @cell.fired_upon?
   end
-
-  --------------------------------------------
 
   def test_cell_has_not_been_fired_upon
     skip
