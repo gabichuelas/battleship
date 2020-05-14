@@ -36,9 +36,16 @@ class Cell
   end
 
 
-  def render()
-    "."
-    #if/elsif/else/end
+  def render(is_there_a_ship = false)
+    if @fired_upon = false
+      "."
+    #elsif @fired_upon = true || @ship.hit = false
+    # "M"
+    #elsif @fired_upon = true || @ship.hit = true
+    # "H"
+    #else @fired_upon = true || @ship.sunk = true
+    # "X"
+    end
   end
 #optional parameters
 end
