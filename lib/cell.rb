@@ -8,7 +8,6 @@ class Cell
     @coordinates = coordinates
     @ship = nil
     @fired_upon = false
-
   end
 
   def empty?
@@ -21,6 +20,7 @@ class Cell
 
   def place_ship(ship)
     @ship = ship
+    @fired_upon = false
   end
 
   def fired_upon?
@@ -32,20 +32,22 @@ class Cell
       @fired_upon = true
       @ship.hit
     else
+      @fired_upon = true
     end
   end
 
-
-  def render(is_there_a_ship = false)
-    if @fired_upon = false
+  def render(show_ship = false)
+    if @ship && @fired_upon
+      "H"
+    elsif @ship && @ship.sunk?
+      "X"
+    elsif @ship && show_ship
+      "S"
+    elsif @fired_upon
+      "M"
+    else
       "."
-    #elsif @fired_upon = true || @ship.hit = false
-    # "M"
-    #elsif @fired_upon = true || @ship.hit = true
-    # "H"
-    #else @fired_upon = true || @ship.sunk = true
-    # "X"
     end
   end
-#optional parameters
+
 end
