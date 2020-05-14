@@ -58,6 +58,7 @@ class CellTest < Minitest::Test
   def test_cell_can_be_rendered
 
     cell_1 = Cell.new("B4")
+    #refute @cell.fired_upon?
     assert_equal ".", cell_1.render
   end
 
