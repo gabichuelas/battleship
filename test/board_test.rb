@@ -40,7 +40,7 @@ class BoardTest < Minitest::Test
   # TEST VALID PLACEMENTS
 
   def test_valid_placement_by_length
-
+    # skip
     # write statement that checks if ship placement
     # array of coordinates is equal in number to
     # length of ship.
@@ -72,7 +72,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_valid_ship_placement
-    skip
+    # skip
 
     assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
     assert_equal true, @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
