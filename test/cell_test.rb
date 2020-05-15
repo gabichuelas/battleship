@@ -79,34 +79,29 @@ class CellTest < Minitest::Test
   def test_cell_rendering_with_hit
     # we created a new cell
     cell_2 = Cell.new("C3")
-    # we fire_upon the cell BEFORE there's a ship in it
     cell_2.fire_upon
-    # which means cell.fired_upon? == true
-    # BUT the cell would render as "M" bc there was no ship
 
-    # let's create a ship
     cruiser = Ship.new("Cruiser", 3)
     # let's put the ship on the cell_2
     cell_2.place_ship(cruiser)
-    # what if we wanted to render the cell WITH the ship
-    # on it, but before Firing on it again? The cell
-    # should show as "." or "S"
     assert_equal ".", cell_2.render
     assert_equal "S", cell_2.render(true)
-    # so fired_upon? is now false, because we reset
-    # the fired_upon status to false with
-    # the place_ship method
-    refute cell_2.fired_upon?
-    # BUT, according to our rendering rules, the cell would
-    # show H even though we never fired on the cell AFTER
-    # we placed the ship, which obv doesn't work when playing.
+    # even though the cell was fired upon previously
+    # before placing the ship, we had to reset
+    # fired_upon? == false again because otherwise it
+    # would render the cell as "H", even if we
+    # hadn't fired on the cell again AFTER the ship
+    # was placed.
+    assert_equal false, cell_2.fired_upon?
 
     # let's fire on the cell now, AFTER we placed a ship
     cell_2.fire_upon
+    assert_equal true, cell_2.fired_upon?
     assert_equal "H", cell_2.render
+
+    refute cruiser.sunk?
     # cruiser hasn't sunk because we only hit one of the
     # 3 cells it occupies
-    refute cruiser.sunk?
   end
 
   def test_it_is_sunk_when_hit_3_times
