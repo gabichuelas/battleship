@@ -33,7 +33,6 @@ class CellTest < Minitest::Test
 
     cruiser = Ship.new("Cruiser", 3)
     @cell.place_ship(cruiser)
-    assert_instance_of Ship, @cell.ship
     refute @cell.empty?
   end
 
@@ -41,17 +40,17 @@ class CellTest < Minitest::Test
 
     cruiser = Ship.new("Cruiser", 3)
     @cell.place_ship(cruiser)
-    refute @cell.fired_upon?
+    assert_equal false, @cell.fired_upon?
   end
 
-  def test_has_been_fired_upon
+  def test_has_been_fired_upon_and_loses_1_health
 
     cruiser = Ship.new("Cruiser", 3)
     @cell.place_ship(cruiser)
     @cell.fire_upon
 
     assert_equal 2, @cell.ship.health
-    assert @cell.fired_upon?
+    assert_equal true, @cell.fired_upon?
   end
 
   def test_cell_can_be_rendered
@@ -80,10 +79,13 @@ class CellTest < Minitest::Test
     # we created a new cell
     cell_2 = Cell.new("C3")
     cell_2.fire_upon
+    assert_equal "M", cell_2.render
+    assert_equal true, cell_2.fired_upon?
 
-    cruiser = Ship.new("Cruiser", 3)
     # let's put the ship on the cell_2
+    cruiser = Ship.new("Cruiser", 3)
     cell_2.place_ship(cruiser)
+
     assert_equal ".", cell_2.render
     assert_equal "S", cell_2.render(true)
     # even though the cell was fired upon previously
@@ -99,7 +101,7 @@ class CellTest < Minitest::Test
     assert_equal true, cell_2.fired_upon?
     assert_equal "H", cell_2.render
 
-    refute cruiser.sunk?
+    assert_equal false, cruiser.sunk?
     # cruiser hasn't sunk because we only hit one of the
     # 3 cells it occupies
   end
@@ -109,13 +111,17 @@ class CellTest < Minitest::Test
     cell_2 = Cell.new("C3")
     cruiser = Ship.new("Cruiser", 3)
     cell_2.place_ship(cruiser)
-
+    cell_2.fire_upon
+    assert_equal true, cell_2.fired_upon?
+    # fired_upon? also takes away 1 health,
+    # just like cruiser.hit does
+    assert_equal 2, cell_2.ship.health
+    assert_equal "H", cell_2.render
+    assert_equal false, cruiser.sunk?
+    # just takes two more cruiser.hit to sink the ship
     cruiser.hit
     cruiser.hit
-    refute cruiser.sunk?
-
-    cruiser.hit
-    assert cruiser.sunk?
+    assert_equal true, cruiser.sunk?
     assert_equal "X", cell_2.render
   end
 
