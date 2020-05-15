@@ -16,64 +16,63 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_has_cells
-    skip
+
     assert_equal 16, @board.cells.count
     # this next line asserts that the class type of
-    # the value that corresponds to the key "AI"
+    # the value that corresponds to the key "A1"
     # is a Cell object.
-    assert_instance_of Cell, @board.cells["AI"].class
+    assert_instance_of Cell, @board.cells["A1"]
   end
 
   # TEST VALID COORDINATES
 
   def test_it_has_a_valid_coordinate
-    skip
+
     # checks if a coordinate is on the board or not
     assert @board.valid_coordinate?("A1")
     assert @board.valid_coordinate?("D4")
 
     refute @board.valid_coordinate?("A5")
     refute @board.valid_coordinate?("E1")
-    refute @board.valid_coordinate("A22")
+    refute @board.valid_coordinate?("A22")
   end
 
   # TEST VALID PLACEMENTS
 
   def test_valid_placement_by_length
-    skip
+
     # write statement that checks if ship placement
     # array of coordinates is equal in number to
     # length of ship.
 
     # The following should be false because there are
-    # only 2 coordinates in the array (AI, A2) but
+    # only 2 coordinates in the array (A1, A2) but
     # cruisers have a length of 3.
     # Same with submarine
-    refute @board.valid_placement?(@cruiser, ["A1", "A2"])
-    refute @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
   end
 
   def test_valid_placement_by_consecutive_cell_coordinates
-    skip
 
-    refute @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
-    refute @board.valid_placement?(@submarine, ["A1", "C1"])
-    refute @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
-    refute @board.valid_placement?(@submarine, ["C1", "B1"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A1", "C1"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
+    assert_equal false, @board.valid_placement?(@submarine, ["C1", "B1"])
   end
 
   def test_valid_placement_coordinates_not_diagonal
     skip
 
-    refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
-    refute @board.valid_placement?(@submarine, ["C2", "D3"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+    assert_equal false, @board.valid_placement?(@submarine, ["C2", "D3"])
   end
 
   def test_valid_ship_placement
     skip
 
-    assert @board.valid_placement?(@submarine, ["A1", "A2"])
-    assert @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
+    assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
+    assert_equal true, @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
   end
 
   # TEST PLACING SHIPS
@@ -111,30 +110,28 @@ class BoardTest < Minitest::Test
     # Ship is already taking up the A1 cell.
   end
 
-  def test_it_has_default_rendered_state
-    skip
-    # board is rendered with no shots fired by default
-    assert_equal
-    "  1 2 3 4 \n" +
-    "A . . . . \n" +
-    "B . . . . \n" +
-    "C . . . . \n" +
-    "D . . . . \n" ,
-    @board.render
-  end
-
-  def test_it_renders_with_a_ship
-    skip
-    # board is rendered after a ship has been placed
-    # this is designated by the optional argument (true)
-    assert_equal
-    "  1 2 3 4 \n" +
-    "A S S S . \n" +
-    "B . . . . \n" +
-    "C . . . . \n" +
-    "D . . . . \n" ,
-    @board.render(true)
-  end
+  # def test_it_has_default_rendered_state
+  #   skip
+  #   # board is rendered with no shots fired by default
+  #   assert_equal
+  #   "  1 2 3 4 \n" +
+  #   "A . . . . \n" +
+  #   "B . . . . \n" +
+  #   "C . . . . \n" +
+  #   "D . . . . \n" , @board.render
+  # end
+  #
+  # def test_it_renders_with_a_ship
+  #   skip
+  #   # board is rendered after a ship has been placed
+  #   # this is designated by the optional argument (true)
+  #   assert_equal
+  #   "  1 2 3 4 \n" +
+  #   "A S S S . \n" +
+  #   "B . . . . \n" +
+  #   "C . . . . \n" +
+  #   "D . . . . \n" , @board.render(true)
+  # end
 
   # ADD MORE RENDERING TESTS HERE
   # include board rendering with Hits, Misses,
