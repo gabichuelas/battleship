@@ -27,16 +27,35 @@ class Board
     cells.any? do |cell_name, cell|
       coordinate == cell_name
     end
-
   end
 
   def valid_placement?(ship, coordinates)
 
-    (ship.length == coordinates.length) &&
-    (cells.each_cons(3).to_a.flatten == coordinates)
+    # turns given coordinates into array of integers
+    columns = coordinates.map { |c| c[1].to_i }
+    # turns given coordinates into array of letter.ordinal_values
+    rows = coordinates.map { |c| c[0].ord }
+    # turns coordinates into array of letter strings
+    coordinate_letters = coordinates.map { |c| c[0] }
+
+    # our checks!
+    horizontal_check = (1..4).each_cons(ship.length).any?(columns)
+    # vertical check
+    letters_ord = ("A".."D").to_a.map { |a| a.ord }
+    vertical_check = letters_ord.each_cons(ship.length).any?(rows)
+
+    if ship.length == coordinates.length
+      if horizontal_check && coordinate_letters.all?(coordinate_letters[0])
+        true
+      elsif vertical_check && !coordinate_letters.all?(coordinate_letters[0]) && columns.all?(columns[0])
+        true
+      else
+        false
+      end
+    else
+      false
+    end
 
   end
-
-
 
 end
