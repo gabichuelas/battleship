@@ -62,13 +62,17 @@ class Board
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
       placement = []
+      # turns coordinates into an array of Cell objects
       coordinates.each do |coordinate|
         placement << cells[coordinate]
       end
+      # should change cell.ship == Ship object
+      #from original parameter!!
       placement.map do |cell|
         cell.place_ship(ship)
       end
       # require "pry"; binding.pry
+      # everything works in pry...
     else
       "Invalid placement"
     end
