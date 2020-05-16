@@ -1,10 +1,7 @@
 class Board
-
+  attr_reader :cells
   def initialize
-  end
-
-  def cells
-    { "A1" => Cell.new("A1"),
+    @cells = { "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
       "A3" => Cell.new("A3"),
       "A4" => Cell.new("A4"),
@@ -48,12 +45,20 @@ class Board
     same_row = rows.all?(rows[0])
     same_column = columns.all?(columns[0])
 
+    # Is the cell empty?
+    empty_cell = coordinates.all? do |coordinate|
+      cells[coordinate].empty? == true
+    end
+
     # valid placement conditional tree
-    # going to need to check whether cells[].empty? first
-    if valid_length && horizontally_cons && same_row
-      true
-    elsif valid_length && vertically_cons && !same_row && same_column
-      true
+    if valid_length && empty_cell
+      if horizontally_cons && same_row
+        true
+      elsif vertically_cons && !same_row && same_column
+        true
+      else
+        false
+      end
     else
       false
     end
@@ -61,18 +66,12 @@ class Board
 
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
-      placement = []
-      # turns coordinates into an array of Cell objects
-      coordinates.each do |coordinate|
-        placement << cells[coordinate]
+
+      cells.each do |coordinate, cell|
+        if coordinates.include?(coordinate)
+          cell.place_ship(ship)
+        end
       end
-      # should change cell.ship == Ship object
-      #from original parameter!!
-      placement.map do |cell|
-        cell.place_ship(ship)
-      end
-      # require "pry"; binding.pry
-      # everything works in pry...
     else
       "Invalid placement"
     end
