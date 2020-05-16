@@ -49,12 +49,28 @@ class Board
     same_column = columns.all?(columns[0])
 
     # valid placement conditional tree
+    # going to need to check whether cells[].empty? first
     if valid_length && horizontally_cons && same_row
       true
     elsif valid_length && vertically_cons && !same_row && same_column
       true
     else
       false
+    end
+  end
+
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      placement = []
+      coordinates.each do |coordinate|
+        placement << cells[coordinate]
+      end
+      placement.map do |cell|
+        cell.place_ship(ship)
+      end
+      # require "pry"; binding.pry
+    else
+      "Invalid placement"
     end
   end
 

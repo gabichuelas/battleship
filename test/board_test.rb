@@ -81,17 +81,19 @@ class BoardTest < Minitest::Test
   # TEST PLACING SHIPS
 
   def test_can_have_a_ship_placed_on_it
-    skip
+    # skip
 
-    board.place(cruiser, ["A1", "A2", "A3"])
-    cell_1 = board.cells["A1"]
-    cell_2 = board.cells["A2"]
-    cell_3 = board.cells["A3"]
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    cell_1 = @board.cells["A1"]
+    cell_2 = @board.cells["A2"]
+    cell_3 = @board.cells["A3"]
 
+    # these Cell assertions pass
     assert_instance_of Cell, cell_1
     assert_instance_of Cell, cell_2
     assert_instance_of Cell, cell_3
 
+    # these follow Ship tests dont pass!?
     assert_instance_of Ship, cell_1.ship
     assert_instance_of Ship, cell_2.ship
     assert_instance_of Ship, cell_3.ship
@@ -105,10 +107,11 @@ class BoardTest < Minitest::Test
 
   def test_overlapping_ships_are_not_possible
     skip
-
+    # write extra condition in valid_placement method
+    # to check if cell.empty? == true first
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
-    refute @board.valid_placement?(@submarine, ["A1", "B1"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A1", "B1"])
     # The following should be false because the cruiser
     # Ship is already taking up the A1 cell.
   end
