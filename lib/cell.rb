@@ -7,7 +7,7 @@ class Cell
 
   def initialize(coordinates)
     @coordinates = coordinates
-    # @ship = nil
+    @ship = nil
     @fired_upon = false
   end
 
