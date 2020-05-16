@@ -21,9 +21,7 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    cells.any? do |cell_name, cell|
-      coordinate == cell_name
-    end
+    cells.keys.any?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
@@ -72,6 +70,7 @@ class Board
           cell.place_ship(ship)
         end
       end
+
     else
       "Invalid placement"
     end
