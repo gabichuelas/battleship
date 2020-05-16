@@ -1,10 +1,8 @@
 class Board
-
+  attr_reader :cells
   def initialize
-  end
-
-  def cells
-    { "A1" => Cell.new("A1"),
+    @cells = {
+      "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
       "A3" => Cell.new("A3"),
       "A4" => Cell.new("A4"),
@@ -25,29 +23,40 @@ class Board
 
   def valid_coordinate?(coordinate)
     cells.any? do |cell_name, cell|
-      coordinate == cell_name
+      cell_name == coordinate
     end
   end
 
   def valid_placement?(ship, coordinates)
 
-    # turns given coordinates into array of integers
-    columns = coordinates.map { |c| c[1].to_i }
-    # turns given coordinates into array of letter.ordinal_values
-    rows = coordinates.map { |c| c[0].ord }
-    # turns coordinates into array of letter strings
-    coordinate_letters = coordinates.map { |c| c[0] }
+    # valid number of coordinates
+    valid_length = ship.length == coordinates.length
+    # coordinate columns as integer
+    columns = coordinates.map do |coordinate|
+      coordinate[1].to_i end
+    # coordinate rows as letter string
+    rows = coordinates.map do |coordinate|
+      coordinate[0] end
 
-    # our checks!
-    horizontal_check = (1..4).each_cons(ship.length).any?(columns)
-    # vertical check
-    letters_ord = ("A".."D").to_a.map { |a| a.ord }
-    vertical_check = letters_ord.each_cons(ship.length).any?(rows)
+    # checking consecutiveness
+    horizontally_cons = (1..4).each_cons(ship.length).any?(columns)
 
-    if ship.length == coordinates.length
-      if horizontal_check && coordinate_letters.all?(coordinate_letters[0])
+    vertically_cons = ("A".."D").each_cons(ship.length).any?(rows)
+
+    same_row = rows.all?(rows[0])
+    same_column = columns.all?(columns[0])
+
+    # is the cell coordinate valid & empty?
+    valid_and_empty = coordinates.all? do |coordinate|
+      valid_coordinate?(coordinate)
+      cells[coordinate].empty? == true
+    end
+
+    # valid placement conditional tree
+    if valid_and_empty && valid_length
+      if horizontally_cons && same_row
         true
-      elsif vertical_check && !coordinate_letters.all?(coordinate_letters[0]) && columns.all?(columns[0])
+      elsif vertically_cons && !same_row && same_column
         true
       else
         false
@@ -56,6 +65,16 @@ class Board
       false
     end
 
+  end
+
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
+        cells[coordinate].place_ship(ship)
+      end
+    else
+      "Invalid placement"
+    end
   end
 
 end
