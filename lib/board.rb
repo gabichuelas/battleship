@@ -21,7 +21,9 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    cells.keys.any?(coordinate)
+    cells.any? do |cell_name, cell|
+      cell_name == coordinate
+    end 
   end
 
   def valid_placement?(ship, coordinates)
@@ -48,8 +50,13 @@ class Board
       cells[coordinate].empty? == true
     end
 
+    # Is the coordinate valid?
+    valid_coordinate = coordinates.all? do |coordinate|
+      valid_coordinate?(coordinate)
+    end
+
     # valid placement conditional tree
-    if valid_length && empty_cell
+    if valid_coordinate && valid_length && empty_cell
       if horizontally_cons && same_row
         true
       elsif vertically_cons && !same_row && same_column
