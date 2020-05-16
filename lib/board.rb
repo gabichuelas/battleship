@@ -31,31 +31,31 @@ class Board
 
   def valid_placement?(ship, coordinates)
 
-    # turns given coordinates into array of integers
-    columns = coordinates.map { |c| c[1].to_i }
-    # turns given coordinates into array of letter.ordinal_values
-    rows = coordinates.map { |c| c[0].ord }
-    # turns coordinates into array of letter strings
-    coordinate_letters = coordinates.map { |c| c[0] }
+    # valid number of coordinates
+    valid_length = ship.length == coordinates.length
+    # coordinate columns as integer
+    columns = coordinates.map do |coordinate|
+      coordinate[1].to_i end
+    # coordinate rows as letter string
+    rows = coordinates.map do |coordinate|
+      coordinate[0] end
 
-    # our checks!
-    horizontal_check = (1..4).each_cons(ship.length).any?(columns)
-    # vertical check
-    letters_ord = ("A".."D").to_a.map { |a| a.ord }
-    vertical_check = letters_ord.each_cons(ship.length).any?(rows)
+    # checking consecutiveness
+    horizontally_cons = (1..4).each_cons(ship.length).any?(columns)
 
-    if ship.length == coordinates.length
-      if horizontal_check && coordinate_letters.all?(coordinate_letters[0])
-        true
-      elsif vertical_check && !coordinate_letters.all?(coordinate_letters[0]) && columns.all?(columns[0])
-        true
-      else
-        false
-      end
+    vertically_cons = ("A".."D").each_cons(ship.length).any?(rows)
+
+    same_row = rows.all?(rows[0])
+    same_column = columns.all?(columns[0])
+
+    # valid placement conditional tree
+    if valid_length && horizontally_cons && same_row
+      true
+    elsif valid_length && vertically_cons && !same_row && same_column
+      true
     else
       false
     end
-
   end
 
 end
