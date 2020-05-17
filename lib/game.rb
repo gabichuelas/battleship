@@ -23,3 +23,24 @@ class Game
 
     "Enter the squares for the Cruiser (3 spaces):"
     print "> "
+
+
+    #new board showing user-placed Cruiser
+
+
+    "Enter the squares for the Submarine (2 spaces):"
+    print "> "
+
+    #if user enters invalid sequence(s), extra prompts~
+
+
+    #new board showing user-placed Submarine
+
+
+
+
+  end
+
+  if option == "q"
+    puts "Your loss."
+  end
