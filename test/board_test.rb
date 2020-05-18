@@ -121,24 +121,25 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_renders_with_miss_and_hit
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
     cell1 = @board.cells["A1"]
     cell2 = @board.cells["A2"]
     cell3 = @board.cells["A3"]
+    cell4 = @board.cells["A4"]
 
-    cell_2.place_ship(cruiser)
-    cell_2.fire_upon
+    cell2.fire_upon
+    assert_equal "  1 2 3 4\nA . H . .\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
 
-  # "  1 2 3 4 \n" +
-  # "A H . . . \n" +
-  # "B . . . M \n" +
-  # "C X . . . \n" +
-  # "D X . . . \n"
-  #
-  # "  1 2 3 4 \n" +
-  # "A H S S . \n" +
-  # "B . . . M \n" +
-  # "C X . . . \n" +
-  # "D X . . . \n"
+    cell3.fire_upon
+    assert_equal "  1 2 3 4\nA . H H .\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
+
+    cell4.fire_upon
+    assert_equal "  1 2 3 4\nA . H H M\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
+
+    cell1.fire_upon
+    # cruiser has been hit a third time and sunk
+    assert_equal "  1 2 3 4\nA X X X M\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
+  end
 
 end
