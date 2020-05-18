@@ -107,28 +107,18 @@ class BoardTest < Minitest::Test
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "B1"])
   end
 
-  # def test_it_has_default_rendered_state
-  #   skip
-  #   # board is rendered with no shots fired by default
-  #   assert_equal
-  #   "  1 2 3 4 \n" +
-  #   "A . . . . \n" +
-  #   "B . . . . \n" +
-  #   "C . . . . \n" +
-  #   "D . . . . \n" , @board.render
-  # end
-  #
-  # def test_it_renders_with_a_ship
-  #   skip
-  #   # board is rendered after a ship has been placed
-  #   # this is designated by the optional argument (true)
-  #   assert_equal
-  #   "  1 2 3 4 \n" +
-  #   "A S S S . \n" +
-  #   "B . . . . \n" +
-  #   "C . . . . \n" +
-  #   "D . . . . \n" , @board.render(true)
-  # end
+  def test_it_has_default_rendered_state
+    # skip
+    # board is rendered with no shots fired by default
+    assert_equal "  1 2 3 4\nA . . . .\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
+  end
+
+  def test_it_renders_with_a_ship
+    # skip
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    assert_equal "  1 2 3 4\nA S S S .\nB . . . .\nC . . . .\nD . . . .\n" , @board.render(true)
+  end
 
   # ADD MORE RENDERING TESTS HERE
   # include board rendering with Hits, Misses,
