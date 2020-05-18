@@ -120,20 +120,26 @@ class BoardTest < Minitest::Test
     assert_equal "  1 2 3 4\nA S S S .\nB . . . .\nC . . . .\nD . . . .\n" , @board.render(true)
   end
 
-  # ADD MORE RENDERING TESTS HERE
-  # include board rendering with Hits, Misses,
-  # and Sunken Ships. Two examples:
+  def test_it_renders_with_miss_and_hit
 
-  # "  1 2 3 4 \n" +
-  # "A H . . . \n" +
-  # "B . . . M \n" +
-  # "C X . . . \n" +
-  # "D X . . . \n"
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    cell1 = @board.cells["A1"]
+    cell2 = @board.cells["A2"]
+    cell3 = @board.cells["A3"]
+    cell4 = @board.cells["A4"]
 
-  # "  1 2 3 4 \n" +
-  # "A H S S . \n" +
-  # "B . . . M \n" +
-  # "C X . . . \n" +
-  # "D X . . . \n"
+    cell2.fire_upon
+    assert_equal "  1 2 3 4\nA . H . .\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
+
+    cell3.fire_upon
+    assert_equal "  1 2 3 4\nA . H H .\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
+
+    cell4.fire_upon
+    assert_equal "  1 2 3 4\nA . H H M\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
+
+    cell1.fire_upon
+    # cruiser has been hit a third time and sunk
+    assert_equal "  1 2 3 4\nA X X X M\nB . . . .\nC . . . .\nD . . . .\n" , @board.render
+  end
 
 end
