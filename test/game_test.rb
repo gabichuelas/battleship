@@ -40,7 +40,7 @@ class GameTest < Minitest::Test
     # skip
     @game.generate_ships
 
-    cells = @game.randomize_comp_coordinates(@game.comp_ships['Cruiser'])
+    cells = @game.random_coordinates(@game.comp_ships['Cruiser'])
 
     assert_equal 3, cells.count
   end
