@@ -38,8 +38,10 @@ class GameTest < Minitest::Test
   def test_can_pick_random_coordinates
     # skip
     @game.generate_ships
+    
+    cells = @game.randomize_coordinates(@game.comp_ships['Cruiser'])
 
-    assert_equal 3, @game.randomize_coordinates(@game.comp_ships['Cruiser']).count
+    assert_equal 3, cells.count
   end
 
   def test_can_place_computer_ships

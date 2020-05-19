@@ -50,15 +50,19 @@ class Game
   end
 
   def randomize_coordinates(ship)
-    cells = []
-    until @board.valid_placement?(ship, cells)
-      cells = @board.cells.keys.sample(ship.length)
+    coordinates = []
+    until @board.valid_placement?(ship, coordinates)
+      coordinates = @board.cells.keys.sample(ship.length)
     end
-    cells
+    coordinates
   end
 
   def computer_ships_placement
-    # @board.place(@comp_cruiser, cruiser_cells)
+    generate_ships
+    comp_ships.each do |name, ship|
+      coordinates = randomize_coordinates(ship)
+      @board.place(ship, coordinates)
+    end
   end
 
   def player_ship_placement
