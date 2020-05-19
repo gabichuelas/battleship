@@ -116,7 +116,7 @@ class BoardTest < Minitest::Test
   def test_it_renders_with_a_ship
     # skip
     @board.place(@cruiser, ["A1", "A2", "A3"])
-
+    require "pry"; binding.pry
     assert_equal "  1 2 3 4\nA S S S .\nB . . . .\nC . . . .\nD . . . .\n" , @board.render(true)
   end
 
