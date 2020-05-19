@@ -11,16 +11,17 @@ class Game
 
   def main_menu
     puts "Welcome to BATTLESHIP\nEnter p to play. Enter q to quit."
-    # write loop that prompts user again until
-    # user enters valid input
+    print "> "
+
     option = gets.downcase.chomp!
     until option.match(/p/) || option.match(/q/)
       puts "Enter p to play. Enter q to quit."
+      print "> "
       option = gets.downcase.chomp!
     end
 
     if option.match(/p/)
-      # method that starts game here.. #turn?
+      self.game_setup
     else
       puts "You've quit the game."
     end
@@ -34,13 +35,13 @@ class Game
     puts @player_board.render
 
     puts "Enter the squares for the Cruiser (3 spaces):\nFor example: You can enter A1 A2 A3 - separate each coordinate with a space"
-    puts "> "
+    print "> "
 
     player_places_ship(@player_ships['Cruiser'])
     puts @player_board.render(true)
 
     puts "Enter the squares for the Submarine (2 spaces):"
-    puts "> "
+    print "> "
 
     player_places_ship(@player_ships['Submarine'])
     puts @player_board.render(true)
@@ -49,9 +50,9 @@ class Game
   def player_places_ship(ship)
     player_input = gets.upcase.chomp!
     coordinates = player_input.split(' ')
-
     until @player_board.valid_placement?(ship, coordinates)
       puts "Those are invalid coordinates. Please try again:"
+      print "> "
       player_input = gets.upcase.chomp!
       coordinates = player_input.split(' ')
     end
