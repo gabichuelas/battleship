@@ -26,6 +26,39 @@ class Game
     end
   end
 
+  def game_setup
+    computer_ships_placement
+
+    # Player ship placement:
+    puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
+    puts @player_board.render
+
+    puts "Enter the squares for the Cruiser (3 spaces):\nFor example: You can enter A1 A2 A3 - separate each coordinate with a space"
+    puts "> "
+
+    player_places_ship(@player_ships['Cruiser'])
+    puts @player_board.render(true)
+
+    puts "Enter the squares for the Submarine (2 spaces):"
+    puts "> "
+
+    player_places_ship(@player_ships['Submarine'])
+    puts @player_board.render(true)
+  end
+
+  def player_places_ship(ship)
+    player_input = gets.upcase.chomp!
+    coordinates = player_input.split(' ')
+
+    until @player_board.valid_placement?(ship, coordinates)
+      puts "Those are invalid coordinates. Please try again:"
+      player_input = gets.upcase.chomp!
+      coordinates = player_input.split(' ')
+    end
+
+    @player_board.place(ship, coordinates)
+  end
+
   def add_comp_ship(ship)
     # could we use a splat operator to
     # add more than 1 ship at once?
@@ -65,25 +98,6 @@ class Game
       coordinates = random_coordinates(ship)
       @comp_board.place(ship, coordinates)
     end
-  end
-
-  def player_ship_placement
-    puts "I have laid out my ships on the grid.\n
-    You now need to lay out your two ships.\n
-    The Cruiser is three units long and the Submarine is two units long."
-
-    puts "Enter the squares for the Cruiser (3 spaces):"
-    puts "For example: You can enter A1 A2 A3 - separate each coordinate with a space"
-    puts "> "
-    cruiser_squares = gets.chomp
-    # if user enters invalid sequence(s), extra prompts~
-    # new board showing user-placed Cruiser
-
-    puts "Enter the squares for the Submarine (2 spaces):"
-    print "> "
-    sub_squares = gets.chomp
-    # if user enters invalid sequence(s), extra prompts~
-    # new board showing user-placed Submarine
   end
 
   def end_game

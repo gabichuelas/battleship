@@ -47,9 +47,10 @@ class GameTest < Minitest::Test
 
   def test_can_place_computer_ships
     skip
+    @game.computer_ships_placement
     # can't test this bc output changes
     # every time, but I verified it in pry
-    @game.computer_ships_placement
+    # by puts -ing the following line 
     @game.comp_board.render
     @game.comp_board.render(true)
   end
