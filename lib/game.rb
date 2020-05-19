@@ -21,7 +21,7 @@ class Game
     end
 
     if option.match(/p/)
-      self.game_setup
+      game_setup
     else
       puts "You've quit the game."
     end
