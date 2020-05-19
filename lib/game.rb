@@ -10,15 +10,20 @@ class Game
   end
 
   def main_menu
-    puts "Welcome to BATTLESHIP\n
+    p "Welcome to BATTLESHIP\n
     Enter p to play. Enter q to quit."
-    option = gets.chomp!
-    if option == "p"
-      "start game"
-    elsif option == "q"
-      "quit game"
+    # write loop that prompts user again until
+    # user enters valid input
+    option = gets.downcase.chomp!
+    until option.match(/p/) || option.match(/q/)
+      p "Enter p to play. Enter q to quit."
+      option = gets.downcase.chomp!
+    end
+
+    if option.match(/p/)
+      # method that starts game here.. #turn?
     else
-      "Invalid Input!"
+      p "You've quit the game."
     end
   end
 
