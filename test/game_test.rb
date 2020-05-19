@@ -1,5 +1,9 @@
-new_game = Game.new
+require 'minitest/autorun'
+require 'minitest/pride'
+require './lib/ship'
+require './lib/cell'
+require './lib/board'
+require './lib/game'
 
-do this
-new_game.turn
-until game ends
+class GameTest < Minitest::Test
+end
