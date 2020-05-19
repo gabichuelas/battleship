@@ -48,8 +48,7 @@ class Board
 
     # is the cell coordinate valid & empty?
     valid_and_empty = coordinates.all? do |coordinate|
-      valid_coordinate?(coordinate)
-      cells[coordinate].empty? == true
+      valid_coordinate?(coordinate) && cells[coordinate].empty? == true
     end
 
     # valid placement conditional tree
@@ -84,7 +83,7 @@ class Board
     "C #{cells["C1"].render(show_ship)} #{cells["C2"].render(show_ship)} #{cells["C3"].render(show_ship)} #{cells["C4"].render(show_ship)}\n" +
     "D #{cells["D1"].render(show_ship)} #{cells["D2"].render(show_ship)} #{cells["D3"].render(show_ship)} #{cells["D4"].render(show_ship)}\n"
 
-    # to see the board in pry, use puts @board.render 
+    # to see the board in pry, use puts @board.render
   end
 
 end
