@@ -28,7 +28,7 @@ class Game
   end
 
   def add_comp_ship(ship)
-    # could I use a splat operator to
+    # could we use a splat operator to
     # add more than 1 ship at once?
     @comp_ships[ship.name] = ship
   end
