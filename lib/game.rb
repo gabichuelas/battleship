@@ -47,6 +47,34 @@ class Game
     puts @player_board.render(true)
   end
 
+  def turn
+    display_both_boards
+    player_fires
+    comp_fires
+  end
+
+  def display_both_boards
+    puts "=============COMPUTER BOARD============="
+    puts @comp_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
+  end
+
+  def player_fires
+    coordinate = gets.upcase.chomp!
+    until @comp_board.valid_coordinate?(coordinate)
+      puts "Those are invalid coordinates. Please try again:"
+      print "> "
+      coordinate = gets.upcase.chomp!
+    end
+    @comp_board.cells[coordinate].fire_upon
+  end
+
+  def comp_fires
+    coordinate = @player_board.cells.keys.sample
+    @player_board.cells[coordinate].fire_upon
+  end
+
   def player_places_ship(ship)
     player_input = gets.upcase.chomp!
     coordinates = player_input.split(' ')
