@@ -15,8 +15,9 @@ class GameTest < Minitest::Test
     assert_instance_of Game, @game
   end
 
-  def test_it_has_a_board
-    assert_instance_of Board, @game.board
+  def test_it_has_comp_and_player_boards
+    assert_instance_of Board, @game.comp_board
+    assert_instance_of Board, @game.player_board
   end
 
   def test_has_a_menu
@@ -38,14 +39,19 @@ class GameTest < Minitest::Test
   def test_can_pick_random_coordinates
     # skip
     @game.generate_ships
-    
-    cells = @game.randomize_coordinates(@game.comp_ships['Cruiser'])
+
+    cells = @game.randomize_comp_coordinates(@game.comp_ships['Cruiser'])
 
     assert_equal 3, cells.count
   end
 
   def test_can_place_computer_ships
     skip
+    # can't test this bc output changes
+    # every time, but I verified it in pry
+    @game.computer_ships_placement
+    @game.comp_board.render
+    @game.comp_board.render(true)
   end
 
 

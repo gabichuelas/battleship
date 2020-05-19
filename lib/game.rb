@@ -1,14 +1,12 @@
 class Game
-  attr_reader :board, :player, :comp_ships, :player_ships
+  attr_reader :comp_board, :comp_ships, :player, :player_board, :player_ships
   def initialize(player)
-    @board = Board.new
-    @player = player
+    @comp_board = Board.new
     @comp_ships = Hash.new
+
+    @player = player
+    @player_board = Board.new
     @player_ships = Hash.new
-    # @comp_cruiser = Ship.new("Cruiser", 3)
-    # @comp_sub = Ship.new("Submarine", 2)
-    # @player_cruiser = Ship.new("Cruiser", 3)
-    # @player_sub = Ship.new("Submarine", 2)
   end
 
   def main_menu
@@ -49,10 +47,10 @@ class Game
     add_player_ship(sub)
   end
 
-  def randomize_coordinates(ship)
+  def randomize_comp_coordinates(ship)
     coordinates = []
-    until @board.valid_placement?(ship, coordinates)
-      coordinates = @board.cells.keys.sample(ship.length)
+    until @comp_board.valid_placement?(ship, coordinates)
+      coordinates = @comp_board.cells.keys.sample(ship.length)
     end
     coordinates
   end
@@ -60,8 +58,8 @@ class Game
   def computer_ships_placement
     generate_ships
     comp_ships.each do |name, ship|
-      coordinates = randomize_coordinates(ship)
-      @board.place(ship, coordinates)
+      coordinates = randomize_comp_coordinates(ship)
+      @comp_board.place(ship, coordinates)
     end
   end
 
