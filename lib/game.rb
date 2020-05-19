@@ -1,6 +1,12 @@
 class Game
-
-  def initialize
+  attr_reader :board, :player
+  def initialize(player)
+    @board = Board.new
+    @player = player
+    @comp_cruiser = Ship.new("Cruiser", 3)
+    @comp_sub = Ship.new("Submarine", 2)
+    @player_cruiser = Ship.new("Cruiser", 3)
+    @player_sub = Ship.new("Submarine", 2)
   end
 
   def turn
@@ -9,17 +15,19 @@ class Game
   def main_menu
     puts "Welcome to BATTLESHIP\n
     Enter p to play. Enter q to quit."
-    option = gets.chomp
+    option = gets.chomp!
     if option == "p"
-      # start the game
+      "start game"
     elsif option == "q"
-      # quit game
+      "quit game"
     else
       "Invalid Input!"
     end
   end
 
   def computer_ship_placement
+
+    @board.place(ship, coordinates)
     # choose random coordinates, first for cruiser
     # then for submarine
     # adhere to placement rules
@@ -47,6 +55,7 @@ class Game
   def end_game
     if option == "q"
       puts "Your loss."
+    end
   end
-  
+
 end
