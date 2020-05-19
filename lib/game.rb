@@ -45,6 +45,8 @@ class Game
 
     player_places_ship(@player_ships['Submarine'])
     puts @player_board.render(true)
+
+    turn
   end
 
   def turn
@@ -68,11 +70,35 @@ class Game
       coordinate = gets.upcase.chomp!
     end
     @comp_board.cells[coordinate].fire_upon
+
+    result = ""
+    if @comp_board.cells[coordinate].render == "M"
+      result = "miss"
+      puts "Your shot on #{coordinate} was a #{result}."
+    elsif @comp_board.cells[coordinate].render == "H"
+      result = "hit"
+      puts "Your shot on #{coordinate} #{result} a ship."
+    elsif @comp_board.cells[coordinate].render == "X"
+      result = "sunk"
+      puts "Your shot on #{coordinate} #{result} a ship."
+    end
   end
 
   def comp_fires
     coordinate = @player_board.cells.keys.sample
     @player_board.cells[coordinate].fire_upon
+
+    result = ""
+    if @player_board.cells[coordinate].render == "M"
+      result = "miss"
+      puts "My shot on #{coordinate} was a #{result}."
+    elsif @player_board.cells[coordinate].render == "H"
+      result = "hit"
+      puts "My shot on #{coordinate} #{result} your ship."
+    elsif @player_board.cells[coordinate].render == "X"
+      result = "sunk"
+      puts "My shot on #{coordinate} #{result} your ship."
+    end
   end
 
   def player_places_ship(ship)
