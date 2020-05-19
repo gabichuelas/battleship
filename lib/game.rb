@@ -1,15 +1,14 @@
 class Game
-  attr_reader :board, :player
+  attr_reader :board, :player, :comp_ships, :player_ships
   def initialize(player)
     @board = Board.new
     @player = player
-    @comp_cruiser = Ship.new("Cruiser", 3)
-    @comp_sub = Ship.new("Submarine", 2)
-    @player_cruiser = Ship.new("Cruiser", 3)
-    @player_sub = Ship.new("Submarine", 2)
-  end
-
-  def turn
+    @comp_ships = Hash.new
+    @player_ships = Hash.new
+    # @comp_cruiser = Ship.new("Cruiser", 3)
+    # @comp_sub = Ship.new("Submarine", 2)
+    # @player_cruiser = Ship.new("Cruiser", 3)
+    # @player_sub = Ship.new("Submarine", 2)
   end
 
   def main_menu
@@ -25,12 +24,41 @@ class Game
     end
   end
 
-  def computer_ship_placement
+  def add_comp_ship(ship)
+    # could I use a splat operator to
+    # add more than 1 ship at once?
+    @comp_ships[ship.name] = ship
+  end
 
-    @board.place(ship, coordinates)
-    # choose random coordinates, first for cruiser
-    # then for submarine
-    # adhere to placement rules
+  def add_player_ship(ship)
+    # could I use a splat operator to
+    # add more than 1 ship at once?
+    @player_ships[ship.name] = ship
+  end
+
+  def generate_ships
+    # generate a cruiser
+    cruiser = Ship.new('Cruiser', 3)
+    # generate a sub
+    sub = Ship.new('Submarine', 2)
+    # add 1 of each to comp_ships
+    add_comp_ship(cruiser)
+    add_comp_ship(sub)
+    # add 1 of each to player_ships
+    add_player_ship(cruiser)
+    add_player_ship(sub)
+  end
+
+  def randomize_coordinates(ship)
+    cells = []
+    until @board.valid_placement?(ship, cells)
+      cells = @board.cells.keys.sample(ship.length)
+    end
+    cells
+  end
+
+  def computer_ships_placement
+    # @board.place(@comp_cruiser, cruiser_cells)
   end
 
   def player_ship_placement
