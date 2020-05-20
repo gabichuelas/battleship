@@ -21,6 +21,7 @@ class Game
     end
 
     if option.match(/p/)
+      sleep(1)
       game_setup
     else
       puts "You've quit the game."
@@ -30,22 +31,28 @@ class Game
   def game_setup
     computer_ships_placement
 
-    # Player ship placement:
+    puts "\n"
     puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
+    puts "\n"
     puts @player_board.render
+    puts "\n"
 
     puts "Enter the squares for the Cruiser (3 spaces):\nFor example: You can enter A1 A2 A3 - separate each coordinate with a space"
     print "> "
 
     player_places_ship(@player_ships['Cruiser'])
+    puts "\n"
     puts @player_board.render(true)
-
+    puts "\n"
+    sleep(1)
     puts "Enter the squares for the Submarine (2 spaces):"
     print "> "
 
     player_places_ship(@player_ships['Submarine'])
+    puts "\n"
     puts @player_board.render(true)
-
+    puts "\n"
+    sleep(1)
     game_play
   end
 
@@ -60,7 +67,7 @@ class Game
     elsif player_ships_sunk?
       puts "I won, sucker!"
     end
-
+    puts "\n"
     main_menu
   end
 
@@ -87,10 +94,15 @@ class Game
   end
 
   def display_both_boards
+    puts "\n"
     puts "=============COMPUTER BOARD============="
+    puts "\n"
     puts @comp_board.render
+    puts "\n"
     puts "==============PLAYER BOARD=============="
+    puts "\n"
     puts @player_board.render(true)
+    puts "\n"
   end
 
   def player_fires
@@ -119,7 +131,6 @@ class Game
 
   def comp_fires
     coordinate = @player_board.cells.keys.sample
-    #validate that coordinate is fired_upon? == false
     until @player_board.cells[coordinate].fired_upon? == false
       coordinate = @player_board.cells.keys.sample
     end
@@ -136,6 +147,7 @@ class Game
       result = "sunk"
       puts "My shot on #{coordinate} #{result} your ship."
     end
+    sleep(1)
   end
 
   def player_places_ship(ship)
@@ -152,8 +164,6 @@ class Game
   end
 
   def add_comp_ship(ship)
-    # could we use a splat operator to
-    # add more than 1 ship at once?
     @comp_ships[ship.name] = ship
   end
 
@@ -164,16 +174,14 @@ class Game
   end
 
   def generate_ships
-    # generate a cruiser
     cruiser1 = Ship.new('Cruiser', 3)
     cruiser2 = Ship.new('Cruiser', 3)
-    # generate a sub
     sub1 = Ship.new('Submarine', 2)
     sub2 = Ship.new('Submarine', 2)
-    # add 1 of each to comp_ships
+
     add_comp_ship(cruiser1)
     add_comp_ship(sub1)
-    # add 1 of each to player_ships
+
     add_player_ship(cruiser2)
     add_player_ship(sub2)
   end
