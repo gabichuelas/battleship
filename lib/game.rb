@@ -54,7 +54,7 @@ class Game
     until game_end?
       turn
     end
-
+    display_both_boards
     if comp_ships_sunk?
       puts "You win, I guess :("
     elsif player_ships_sunk?
@@ -88,7 +88,7 @@ class Game
 
   def display_both_boards
     puts "=============COMPUTER BOARD============="
-    puts @comp_board.render(true)
+    puts @comp_board.render
     puts "==============PLAYER BOARD=============="
     puts @player_board.render(true)
   end
@@ -97,7 +97,7 @@ class Game
     puts "Enter the coordinate for your shot:"
     print "> "
     coordinate = gets.upcase.chomp!
-    until @comp_board.valid_coordinate?(coordinate)
+    until @comp_board.valid_coordinate?(coordinate) && @comp_board.cells[coordinate].fired_upon? == false
       puts "Please enter a valid coordinate:"
       print "> "
       coordinate = gets.upcase.chomp!
@@ -119,6 +119,10 @@ class Game
 
   def comp_fires
     coordinate = @player_board.cells.keys.sample
+    #validate that coordinate is fired_upon? == false
+    until @player_board.cells[coordinate].fired_upon? == false
+      coordinate = @player_board.cells.keys.sample
+    end
     @player_board.cells[coordinate].fire_upon
 
     result = ""
@@ -161,15 +165,17 @@ class Game
 
   def generate_ships
     # generate a cruiser
-    cruiser = Ship.new('Cruiser', 3)
+    cruiser1 = Ship.new('Cruiser', 3)
+    cruiser2 = Ship.new('Cruiser', 3)
     # generate a sub
-    sub = Ship.new('Submarine', 2)
+    sub1 = Ship.new('Submarine', 2)
+    sub2 = Ship.new('Submarine', 2)
     # add 1 of each to comp_ships
-    add_comp_ship(cruiser)
-    add_comp_ship(sub)
+    add_comp_ship(cruiser1)
+    add_comp_ship(sub1)
     # add 1 of each to player_ships
-    add_player_ship(cruiser)
-    add_player_ship(sub)
+    add_player_ship(cruiser2)
+    add_player_ship(sub2)
   end
 
   def random_coordinates(ship)
