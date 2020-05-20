@@ -45,6 +45,93 @@ class Game
 
     player_places_ship(@player_ships['Submarine'])
     puts @player_board.render(true)
+
+    game_play
+  end
+
+  def game_play
+    turn
+    until game_end?
+      turn
+    end
+
+    if comp_ships_sunk?
+      puts "You win, I guess :("
+    elsif player_ships_sunk?
+      puts "I won, sucker!"
+    end
+
+    main_menu
+  end
+
+  def turn
+    display_both_boards
+    player_fires
+    comp_fires
+  end
+
+  def game_end?
+    comp_ships_sunk? || player_ships_sunk?
+  end
+
+  def comp_ships_sunk?
+    @comp_ships.all? do |ship_name, ship|
+      ship.sunk?
+    end
+  end
+
+  def player_ships_sunk?
+    @player_ships.all? do |ship_name, ship|
+      ship.sunk?
+    end
+  end
+
+  def display_both_boards
+    puts "=============COMPUTER BOARD============="
+    puts @comp_board.render(true)
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
+  end
+
+  def player_fires
+    puts "Enter the coordinate for your shot:"
+    print "> "
+    coordinate = gets.upcase.chomp!
+    until @comp_board.valid_coordinate?(coordinate)
+      puts "Please enter a valid coordinate:"
+      print "> "
+      coordinate = gets.upcase.chomp!
+    end
+    @comp_board.cells[coordinate].fire_upon
+
+    result = ""
+    if @comp_board.cells[coordinate].render == "M"
+      result = "miss"
+      puts "Your shot on #{coordinate} was a #{result}."
+    elsif @comp_board.cells[coordinate].render == "H"
+      result = "hit"
+      puts "Your shot on #{coordinate} #{result} a ship."
+    elsif @comp_board.cells[coordinate].render == "X"
+      result = "sunk"
+      puts "Your shot on #{coordinate} #{result} a ship."
+    end
+  end
+
+  def comp_fires
+    coordinate = @player_board.cells.keys.sample
+    @player_board.cells[coordinate].fire_upon
+
+    result = ""
+    if @player_board.cells[coordinate].render == "M"
+      result = "miss"
+      puts "My shot on #{coordinate} was a #{result}."
+    elsif @player_board.cells[coordinate].render == "H"
+      result = "hit"
+      puts "My shot on #{coordinate} #{result} your ship."
+    elsif @player_board.cells[coordinate].render == "X"
+      result = "sunk"
+      puts "My shot on #{coordinate} #{result} your ship."
+    end
   end
 
   def player_places_ship(ship)
@@ -98,12 +185,6 @@ class Game
     comp_ships.each do |name, ship|
       coordinates = random_coordinates(ship)
       @comp_board.place(ship, coordinates)
-    end
-  end
-
-  def end_game
-    if option == "q"
-      puts "Your loss."
     end
   end
 
