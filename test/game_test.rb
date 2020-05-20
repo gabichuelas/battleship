@@ -50,7 +50,7 @@ class GameTest < Minitest::Test
     @game.computer_ships_placement
     # can't test this bc output changes
     # every time, but I verified it in pry
-    # by puts -ing the following line 
+    # by puts -ing the following line
     @game.comp_board.render
     @game.comp_board.render(true)
   end
