@@ -6,4 +6,4 @@ This is the repo for our first paired project in "module 1" of Turing School of 
 
 **[Gaby Mendez](https://github.com/gabichuelas) & [Amy Moller](https://github.com/amymoller)**
 
-To play, clone repo on to your local machine, and run `runner.rb` in the terminal!
+To play, clone repo on to your local machine, and run `runner.rb` from the command line!
