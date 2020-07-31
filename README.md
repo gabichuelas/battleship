@@ -3,6 +3,7 @@
 ### Battleship ###
 
 This is the repo for a paired project completed during "Module 1" at Turing School of Software & Design. 
+
 [Original Project Specs](https://backend.turing.io/module1/projects/battleship/)
 
 ### Contributors ###
